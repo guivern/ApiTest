@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiTest.Data;
+using ApiTest.Helpers;
 using ApiTest.Models;
 using ApiTest.Models.Dtos;
 using AutoMapper;
@@ -26,14 +27,24 @@ namespace ApiTest.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(
+            [FromQuery] string filter,
+            [FromQuery] string orderBy = Constants.DEFAULT_ODERING,
+            [FromQuery] int pageSize = Constants.DEFAULT_PAGE_SIZE,
+            [FromQuery] int pageNumber = Constants.DEFAULT_PAGE_NUMBER)
         {
-            var paises = await _context.Paises
-                .Include(p => p.Ciudades)
-                .ToListAsync();
+            var query = _context.Paises.Include(p => p.Ciudades).AsQueryable();
+
+            query = Filter(query, filter);
+            query = OrderBy(query, orderBy);
+
+            var paises = await PagedList<Pais>.CreateAsync(query, pageNumber, pageSize);
 
             // mapeamos los paises a su tipo dto
             var dto = _mapper.Map<List<PaisListDto>>(paises);
+
+            // agregamos el header de paginacion
+            Response.AddPagination(paises.PageNumber, paises.PageSize, paises.TotalPages, paises.TotalCount);
 
             return Ok(dto);
         }
@@ -93,18 +104,42 @@ namespace ApiTest.Controllers
             var pais = await _context.Paises
                 .Include(p => p.Ciudades)
                 .FirstOrDefaultAsync(p => p.Id == id);
-            
+
             // chequeamos que exista el pais
             if (pais == null) return NotFound();
 
             // chequeamos que no tenga ciudades asociadas
-            if (pais.Ciudades.Count > 0) 
+            if (pais.Ciudades.Count > 0)
                 return BadRequest("No se puede eliminar porque tiene ciudades asociadas");
 
             _context.Paises.Remove(pais);
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        private IQueryable<Pais> Filter(IQueryable<Pais> query, string filter)
+        {
+            if (string.IsNullOrEmpty(filter)) return query;
+
+            return query.Where(p => p.Nombre.ToLower().Contains(filter.ToLower())
+                || p.Sigla.ToLower().Contains(filter.ToLower()));
+        }
+
+        private IQueryable<Pais> OrderBy(IQueryable<Pais> query, string orderBy)
+        {
+            if (string.IsNullOrEmpty(orderBy)) return query;
+
+            var splitedOrder = orderBy.Split(':');
+            var columnName = splitedOrder[0].ToLower();
+            var orderType = splitedOrder.Count() > 1 ? splitedOrder[1] : "asc";
+
+            if (orderType.ToLower().Equals("desc"))
+            {
+                return query.OrderByDescending(OrderByExpressions.PaisesOrderBy[columnName]);
+            }
+
+            return query.OrderBy(OrderByExpressions.PaisesOrderBy[columnName]);
         }
     }
 }

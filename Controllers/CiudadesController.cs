@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ApiTest.Data;
+using ApiTest.Helpers;
 using ApiTest.Models;
 using ApiTest.Models.Dtos;
 using AutoMapper;
@@ -25,12 +27,24 @@ namespace ApiTest.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(
+            [FromQuery] string filter,
+            [FromQuery] string orderBy = Constants.DEFAULT_ODERING,
+            [FromQuery] int pageSize = Constants.DEFAULT_PAGE_SIZE,
+            [FromQuery] int pageNumber = Constants.DEFAULT_PAGE_NUMBER)
         {
-            var ciudades = await _context.Ciudades.ToListAsync();
+            var query = _context.Ciudades.Include(c => c.Pais).AsQueryable();
+
+            query = Filter(query, filter);
+            query = OrderBy(query, orderBy);
+
+            var ciudades = await PagedList<Ciudad>.CreateAsync(query, pageNumber, pageSize);
 
             // mapeamos los paises a su tipo dto
             var dto = _mapper.Map<List<CiudadListDto>>(ciudades);
+
+            // agregamos el header de paginacion
+            Response.AddPagination(ciudades.PageNumber, ciudades.PageSize, ciudades.TotalPages, ciudades.TotalCount);
 
             return Ok(dto);
         }
@@ -131,6 +145,31 @@ namespace ApiTest.Controllers
         private async Task<bool> ExistePais(long idPais)
         {
             return await _context.Paises.AnyAsync(p => p.Id == idPais);
+        }
+
+        private IQueryable<Ciudad> Filter(IQueryable<Ciudad> query, string filter)
+        {
+            if (string.IsNullOrEmpty(filter)) return query;
+
+            return query.Where(c => c.Nombre.ToLower().Contains(filter.ToLower())
+                || c.EsCapital.ToString().ToLower().Equals(filter.ToLower())
+                || c.Pais.Nombre.ToLower().Contains(filter.ToLower()));
+        }
+
+        private IQueryable<Ciudad> OrderBy(IQueryable<Ciudad> query, string orderBy)
+        {
+            if (string.IsNullOrEmpty(orderBy)) return query;
+
+            var splitedOrder = orderBy.Split(':');
+            var columnName = splitedOrder[0].ToLower();
+            var orderType = splitedOrder.Count() > 1 ? splitedOrder[1] : "asc";
+
+            if (orderType.ToLower().Equals("desc"))
+            {
+                return query.OrderByDescending(OrderByExpressions.CiudadesOrderBy[columnName]);
+            }
+
+            return query.OrderBy(OrderByExpressions.CiudadesOrderBy[columnName]);
         }
     }
 }
