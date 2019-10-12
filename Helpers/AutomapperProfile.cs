@@ -23,6 +23,9 @@ namespace ApiTest.Helpers
             CreateMap<Pais, PaisListDto>()
                 .ForMember(dest => dest.Capital, opt => opt
                 .MapFrom(src => src.Ciudades.FirstOrDefault(c => c.EsCapital).Nombre));
+            CreateMap<CiudadDto, Ciudad>();
+            CreateMap<Ciudad, CiudadDetailDto>();
+            CreateMap<Ciudad, CiudadListDto>();
         }
     }
 }
