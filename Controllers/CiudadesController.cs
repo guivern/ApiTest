@@ -86,7 +86,7 @@ namespace ApiTest.Controllers
         public async Task<IActionResult> Create(CiudadDto dto)
         {
             // chequeamos si existe el pais asignado a la ciudad
-            if (!await ExistePais(dto.IdPais))
+            if (!await ExistePais((long)dto.IdPais))
                 return BadRequest($"No existe un país con Id {dto.IdPais}");
 
             // mapeamos el dto al tipo Ciudad
@@ -119,7 +119,7 @@ namespace ApiTest.Controllers
             if (ciudad == null) return NotFound();
 
             // chequeamos si existe el pais asignado a la ciudad
-            if (!await ExistePais(dto.IdPais))
+            if (!await ExistePais((long)dto.IdPais))
                 return BadRequest($"No existe un país con Id {dto.IdPais}");
 
             // chequeamos si es capital

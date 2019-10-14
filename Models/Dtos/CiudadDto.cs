@@ -6,7 +6,8 @@ namespace ApiTest.Models.Dtos
     {
         [Required]
         public string Nombre { get; set; }
-        public long IdPais { get; set; }
+        [Required]
+        public long? IdPais { get; set; }
         public bool EsCapital { get; set; }
     }
 }
