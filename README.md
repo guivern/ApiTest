@@ -31,7 +31,7 @@ Luego de descargar el proyecto, posicionarse en la carpeta raiz del proyecto des
 ## Autenticación
 **Obs**: Todos los endpoints están protegidos por JWT, por lo que deberá autenticarse antes de probar los servicios.
 
-Puede autenticarse enviando una petición POST a: http://localhost:5000/auth. El servidor responderá con un token el cual podrá copiar y pegar como cabecera de autorización para las demás peticiones
+Puede autenticarse enviando una petición GET a: http://localhost:5000/auth. El servidor responderá con un token el cual podrá copiar y pegar como cabecera de autorización para las demás peticiones.
 
 ## Ejemplos:
 * Se adjunda Postman Collection
