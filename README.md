@@ -19,9 +19,9 @@ Luego de descargar el proyecto, posicionarse en la carpeta raiz del proyecto des
 | ----------- | --------------- | --------- | ----------- | ------ |
 | CRUD OP     | CREATE          | READ      | UPDATE      | DELETE |
 | /paises       | Crea un país | Lista países | - | - |
-| /paises/1  | -           | Retorna país si existe, sino retorna 404   | Actualliza país si existe, sino retorna 404 | Elimina país si existe y no posee ciudades, retorna 400 si existe país y tiene ciudades, retorna 400 si no existe país |
+| /paises/1  | -           | Retorna país si existe, sino retorna 404   | Actualliza país si existe, sino retorna 404 | Elimina país si existe y no posee ciudades, retorna 400 si existe país y tiene ciudades, retorna 404 si no existe país |
 | /ciudades       | Crea una ciudad | Lista ciudades | - | - |
-| /ciudades/1  | -           | Retorna ciudad si existe, sino retorna 404   | Actualliza ciudad si existe, sino retorna 404 | Elimina ciudad si existe, retorna 404 si no existe país |
+| /ciudades/1  | -           | Retorna ciudad si existe, sino retorna 404   | Actualliza ciudad si existe, sino retorna 404 | Elimina ciudad si existe, sino retorna 404 |
 
 **Obs**: Se pueden aplicar paginación, ordenamiento y filtro a las listas, a través de query params. Ej:
 
