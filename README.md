@@ -6,11 +6,12 @@ Descargar e Instalar .Net Core SDK 2.2
 * Linux: https://dotnet.microsoft.com/download/linux-package-manager/ubuntu18-04/sdk-2.2.402
 * Windows: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.402-windows-x64-installer
 ## Instalación
-Luego de descargar el proyecto, posicionarse en la carpeta raiz desde la terminal y ejecutar los siguientes comandos:
+Luego de descargar el proyecto, posicionarse en la carpeta raiz del proyecto desde la terminal y ejecutar los siguientes comandos:
 1. `dotnet restore` para descargar las dependencias. 
-2. `dotnet run` para iniciar la aplicación.
+2. `dotnet ef database update` crea una bd sqlite. 
+3. `dotnet run` para iniciar la aplicación.
   * La aplicación corre en: http://localhost:5000
-  * La interfaz del `Swagger`: http://localhost:5000/swagger
+  * `Swagger UI`: http://localhost:5000/swagger
   
 ## Diseño de la API
 
@@ -32,12 +33,9 @@ Luego de descargar el proyecto, posicionarse en la carpeta raiz desde la termina
 
 Puede autenticarse enviando una petición POST a: http://localhost:5000/auth. El servidor responderá con un token el cual podrá copiar y pegar como cabecera de autorización para las demás peticiones
 
-## Ejemplos
-Luego de iniciar la aplicación y obtener el token de autorización, puede empezar a consumir la API con Postman o algun otro cliente API. 
-
-Postman Collection: 
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2cca3f84cb9280faf144)
+## Ejemplos:
+* Se adjunda Postman Collection
+* Para más ejemplos acceder a la interfaz de `swagger`  http://localhost:5000/swagger
 
 
 
