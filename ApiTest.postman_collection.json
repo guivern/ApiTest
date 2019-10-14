@@ -1,0 +1,425 @@
+{
+	"info": {
+		"_postman_id": "802e4c90-a1f0-4e19-98cd-7d0ba85647f2",
+		"name": "ApiTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticacion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creación de país",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"paraguay\",\n\t\"sigla\": \"py\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/paises",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"paises"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificación de país",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Paraguay\",\n\t\"sigla\":\"Asunción\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/paises/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"paises",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creación de ciudad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Asuncion\",\n\t\"idPais\": 1,\n\t\"esCapital\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/ciudades/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"ciudades",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificación de ciudad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Asunción\",\n\t\"idPais\": 1,\n\t\"esCapital\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/ciudades/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"ciudades",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta de país",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/paises?orderBy=nombre:asc&filter=paraguay&pageSize=5&pageNumber=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"paises"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "nombre:asc"
+						},
+						{
+							"key": "filter",
+							"value": "paraguay"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "pageNumber",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta de ciudad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/ciudades?orderBy=nombre:asc&filter=asu&pageSize=5&pageNumber=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"ciudades"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "nombre:asc"
+						},
+						{
+							"key": "filter",
+							"value": "asu"
+						},
+						{
+							"key": "pageSize",
+							"value": "5"
+						},
+						{
+							"key": "pageNumber",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detalle de país",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/paises/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"paises",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detalle de ciudad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/ciudades/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"ciudades",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminación de ciudad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/ciudades/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"ciudades",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminación de país",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjY5MDgsImV4cCI6MTU3MzY1ODkwOCwiaWF0IjoxNTcxMDY2OTA4fQ.k8XuIPyWf6rxuGqoqJVn6hoCkO2eM1vFBgl4JS_0M8VDX99Kt87B-yKZrgl-A93sM1klDon7Ny-L3lIcSfGuAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/paises/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"paises",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1NzEwNjUxNzYsImV4cCI6MTU3MzY1NzE3NiwiaWF0IjoxNTcxMDY1MTc2fQ.0jZDQMsA9lWf3giFOP7D3b0GoneR2vhk__Coksp53vkZTROROPCr1p67GlQ89OMIJbXppIhOGGwD8vAOzV1_PA",
+				"type": "string"
+			}
+		]
+	}
+}
