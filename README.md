@@ -34,7 +34,7 @@ Luego de descargar el proyecto, posicionarse en la carpeta raiz del proyecto des
 Puede autenticarse enviando una petición GET a: http://localhost:5000/auth. El servidor responderá con un token el cual podrá copiar y pegar como cabecera de autorización para las demás peticiones.
 
 ## Ejemplos:
-* Se adjunda Postman Collection
+* Postman Collection: https://github.com/guivern/ApiTest/blob/master/ApiTest.postman_collection.json
 * Para más ejemplos acceder a la interfaz de `swagger`  http://localhost:5000/swagger
 
 
