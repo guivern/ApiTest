@@ -7,9 +7,9 @@ using AutoMapper;
 namespace ApiTest.Helpers
 {
     /// <summary>
-    /// Automapper es una libreria c# que realiza mapeo entre clases
-    /// Utilice esta libraria para facilitar los mapeos entre los tipos dto y entidad
-    /// En esta clase se configuran los mapeos
+    /// Automapper es una libreria c# que realiza mapeos entre clases
+    /// Decidí utilizar esta libraria para ahorrar lineas de codigo y facilitar los mapeos entre clases
+    /// Aquí se configuran los mapeos
     /// </summary>
     public class AutomapperProfile : Profile
     {

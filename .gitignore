@@ -33,3 +33,6 @@ msbuild.wrn
 
 # appsettings
 # appsettings.*
+
+# Ignoramos la bd
+ApiTestDb

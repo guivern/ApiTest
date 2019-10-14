@@ -26,6 +26,14 @@ namespace ApiTest.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Obtiene lista de ciudades.
+        /// </summary>
+        /// <param name="filter">Filtro a ser aplicado. Ej: Asuncion</param>
+        /// <param name="orderBy">Ordenamiento a ser aplicado (asc | desc). Ej: nombre:desc</param>
+        /// <param name="pageSize">Tamaño de página</param>
+        /// <param name="pageNumber">Nro. de página</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> List(
             [FromQuery] string filter,
@@ -43,16 +51,20 @@ namespace ApiTest.Controllers
             // mapeamos los paises a su tipo dto
             var dto = _mapper.Map<List<CiudadListDto>>(ciudades);
 
-            // agregamos el header de paginacion
+            // header de paginacion
             Response.AddPagination(ciudades.PageNumber, ciudades.PageSize, ciudades.TotalPages, ciudades.TotalCount);
 
             return Ok(dto);
         }
 
+        /// <summary>
+        /// Obtiene los detalles de una ciudad específica.
+        /// </summary>
+        /// <param name="id">Id. de la ciudad a consultar</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Detail(long id)
         {
-            // obtenemos la entidad desde la bd
             var ciudad = await _context.Ciudades
                 .Include(c => c.Pais)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -65,6 +77,11 @@ namespace ApiTest.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// Crea una ciudad.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Create(CiudadDto dto)
         {
@@ -72,13 +89,13 @@ namespace ApiTest.Controllers
             if (!await ExistePais(dto.IdPais))
                 return BadRequest($"No existe un país con Id {dto.IdPais}");
 
-            // mapeamos el dto a su tipo Entity
+            // mapeamos el dto al tipo Ciudad
             var entity = _mapper.Map<Ciudad>(dto);
 
             // chequeamos si es capital
             if (dto.EsCapital) SetCapital(dto);
 
-            // guardamos en la bd
+            // guardamos
             await _context.Ciudades.AddAsync(entity);
             await _context.SaveChangesAsync();
 
@@ -88,12 +105,18 @@ namespace ApiTest.Controllers
             return CreatedAtAction("Detail", new { Id = entity.Id }, dtoToReturn);
         }
 
+        /// <summary>
+        /// Actualiza una ciudad específica.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, CiudadDto dto)
         {
-            // chequeamos que exista la entidad
-            var entity = await _context.Ciudades.SingleOrDefaultAsync(c => c.Id == id);
-            if (entity == null) return NotFound();
+            // chequeamos si existe la Ciudad
+            var ciudad = await _context.Ciudades.SingleOrDefaultAsync(c => c.Id == id);
+            if (ciudad == null) return NotFound();
 
             // chequeamos si existe el pais asignado a la ciudad
             if (!await ExistePais(dto.IdPais))
@@ -102,15 +125,20 @@ namespace ApiTest.Controllers
             // chequeamos si es capital
             if (dto.EsCapital) SetCapital(dto);
 
-            // mapeamos el dto a su tipo entidad
-            entity = _mapper.Map<CiudadDto, Ciudad>(dto, entity);
+            // mapeamos el dto al tipo Ciudad
+            ciudad = _mapper.Map<CiudadDto, Ciudad>(dto, ciudad);
 
-            // actualizamos la entidad en la bd
+            // actualizamos
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Elimina una ciudad específica.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
@@ -127,6 +155,7 @@ namespace ApiTest.Controllers
             return NoContent();
         }
 
+        #region metodos privados
         // como un pais solo puede tener una capital, si la ciudad a crear o modificar es capital
         // entonces debemos setear la propiedad esCapital en false para las otras ciudades del pais
         // y con esto evitar la posibilidad de que un pais tenga mas de una capital.
@@ -147,13 +176,13 @@ namespace ApiTest.Controllers
             return await _context.Paises.AnyAsync(p => p.Id == idPais);
         }
 
-        private IQueryable<Ciudad> Filter(IQueryable<Ciudad> query, string filter)
+        private IQueryable<Ciudad> Filter(IQueryable<Ciudad> query, string value)
         {
-            if (string.IsNullOrEmpty(filter)) return query;
+            if (string.IsNullOrEmpty(value)) return query;
 
-            return query.Where(c => c.Nombre.ToLower().Contains(filter.ToLower())
-                || c.EsCapital.ToString().ToLower().Equals(filter.ToLower())
-                || c.Pais.Nombre.ToLower().Contains(filter.ToLower()));
+            return query.Where(c => c.Nombre.ToLower().Contains(value.ToLower())
+                || c.EsCapital.ToString().ToLower().Equals(value.ToLower())
+                || c.Pais.Nombre.ToLower().Contains(value.ToLower()));
         }
 
         private IQueryable<Ciudad> OrderBy(IQueryable<Ciudad> query, string orderBy)
@@ -171,5 +200,6 @@ namespace ApiTest.Controllers
 
             return query.OrderBy(OrderByExpressions.CiudadesOrderBy[columnName]);
         }
+        #endregion
     }
 }

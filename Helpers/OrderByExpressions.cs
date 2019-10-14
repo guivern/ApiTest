@@ -5,7 +5,7 @@ using ApiTest.Models;
 
 namespace ApiTest.Helpers
 {
-    public abstract class OrderByExpressions
+    public static class OrderByExpressions
     {
         public static IDictionary<string, Expression<Func<Pais, object>>> PaisesOrderBy = new Dictionary<string, Expression<Func<Pais, object>>>()
         {

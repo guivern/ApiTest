@@ -21,7 +21,6 @@ namespace ApiTest.Data
         }
 
         // entidades que seran mapeadas a la bd
-        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Pais> Paises { get; set; }
         public DbSet<Ciudad> Ciudades { get; set; }
     }

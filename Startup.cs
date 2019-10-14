@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using ApiTest.Data;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -53,7 +56,7 @@ namespace ApiTest
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "Encabezado de autorización. Ejemplo: \"Bearer {token}\"",
+                    Description = "Copie y pegue el token dentro del input. Ejemplo: \"Bearer token\" (Reemplace token por su token obtenido desde el servicio auth)",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey
@@ -73,6 +76,11 @@ namespace ApiTest
                         new string[] {}
                     }
                 });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
